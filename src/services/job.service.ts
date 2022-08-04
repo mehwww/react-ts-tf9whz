@@ -57,9 +57,9 @@ export class JobService {
   getData$() {
     return this.data$.pipe(
       map((data) => {
-        return data.map(({ assignerId, ...item }) => {
-          const assigner = this.userService.getUser(assignerId);
-          return { ...item, assigner };
+        return data.map((job) => {
+          const assigner = this.userService.getUser(job.assignerId);
+          return { ...job, assigner };
         });
       })
     );

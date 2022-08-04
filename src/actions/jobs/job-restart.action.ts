@@ -1,5 +1,5 @@
 import { ActionDefinition } from '../action-definition';
-import { injectable } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { JobService } from '../../services';
 import { JobStatus } from '../../models';
 
@@ -7,7 +7,7 @@ export interface JobRestartActionParams {
   jobId: number;
 }
 
-@injectable()
+@singleton()
 export class JobRestartAction extends ActionDefinition<JobRestartActionParams> {
   constructor(private jobService: JobService) {
     super();

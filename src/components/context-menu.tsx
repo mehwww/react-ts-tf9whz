@@ -28,7 +28,7 @@ export const ContextMenu = <T,>({
               return {
                 key: act.name,
                 label: (
-                  <span onClick={() => act.action(actor)}>{act.name}</span>
+                  <div onClick={() => act.action(actor)}>{act.name}</div>
                 ),
               };
             })

@@ -1,12 +1,12 @@
 import { ActionDefinition } from '../action-definition';
-import { injectable } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { JobService } from '../../services';
 
 export interface JobUnassignActionParams {
   jobId: number;
 }
 
-@injectable()
+@singleton()
 export class JobUnassignAction extends ActionDefinition<JobUnassignActionParams> {
   constructor(private jobService: JobService) {
     super();

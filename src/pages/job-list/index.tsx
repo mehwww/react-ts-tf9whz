@@ -93,13 +93,7 @@ export const JobList = ({ className, style }: IJobListProps) => {
             title: '操作',
             dataIndex: 'operations',
             render: (_, job) => {
-              const { assigner, ...rest } = job;
-              return (
-                <ContextMenu
-                  actor={{ assignerId: assigner?.id, ...rest }}
-                  actions={JobActions}
-                />
-              );
+              return <ContextMenu actor={job} actions={JobActions} />;
             },
           },
         ]}

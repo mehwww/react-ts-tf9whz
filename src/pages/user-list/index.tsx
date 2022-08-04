@@ -4,7 +4,7 @@ import { tap, filter } from 'rxjs';
 import { container } from 'tsyringe';
 import { JobService, UserService } from '../../services';
 import useConstant from 'use-constant';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   JobCompleteAction,
   JobRestartAction,
@@ -43,6 +43,7 @@ export const UserList = ({ className, style }: IUserListProps) => {
   const userService = useConstant(() => container.resolve(UserService));
   const [jobs, setJobs] = React.useState([]);
   const [user, setUser] = React.useState();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     setUser(userService.getUser(userId));
@@ -52,7 +53,9 @@ export const UserList = ({ className, style }: IUserListProps) => {
     const subscription = jobService
       .getData$()
       .pipe(
-        tap((jobs) => setJobs(jobs.filter((job) => job.assigner.id === userId)))
+        tap((jobs) =>
+          setJobs(jobs.filter((job) => job.assigner?.id === userId))
+        )
       )
       .subscribe();
     return () => subscription.unsubscribe();
@@ -60,6 +63,9 @@ export const UserList = ({ className, style }: IUserListProps) => {
 
   return (
     <div className={classNames(className)} style={style}>
+      <div>
+        <a onClick={() => navigate(-1)}>back</a>
+      </div>
       <h1>{user?.name}</h1>
       <Table
         dataSource={jobs}
@@ -79,8 +85,8 @@ export const UserList = ({ className, style }: IUserListProps) => {
           {
             title: '操作',
             dataIndex: 'operations',
-            render: (o) => {
-              return <ContextMenu actor={o} actions={JobActions} />;
+            render: (_, job) => {
+              return <ContextMenu actor={job} actions={JobActions} />;
             },
           },
         ]}

@@ -1,5 +1,5 @@
 import { ActionDefinition } from '../action-definition';
-import { injectable } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { JobService } from '../../services';
 import NiceModal from '@ebay/nice-modal-react';
 import { PickUserModal } from '../../components/dialogs';
@@ -8,7 +8,7 @@ export interface JobAssignActionParams {
   jobId: number;
 }
 
-@injectable()
+@singleton()
 export class JobAssignAction extends ActionDefinition<JobAssignActionParams> {
   constructor(private jobService: JobService) {
     super();
@@ -18,7 +18,7 @@ export class JobAssignAction extends ActionDefinition<JobAssignActionParams> {
     const userId = await NiceModal.show(PickUserModal);
     this.jobService.setUser(params.jobId, userId);
   }
-  
+
   getMenu(): { name: string } {
     return { name: '指定' };
   }
