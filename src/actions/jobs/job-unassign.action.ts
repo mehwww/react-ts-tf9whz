@@ -13,7 +13,7 @@ export class JobUnassignAction extends ActionDefinition<JobUnassignActionParams>
   }
 
   invoke(params: JobUnassignActionParams): void | Promise<void> {
-    throw new Error('Method not implemented.');
+    this.jobService.setUser(params.jobId, null);
   }
   getMenu(): { name: string } {
     return { name: '解除指定' };

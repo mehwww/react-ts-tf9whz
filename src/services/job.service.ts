@@ -57,8 +57,6 @@ export class JobService {
   getData$() {
     return this.data$.pipe(
       map((data) => {
-        console.log('!!!');
-
         return data.map(({ assignerId, ...item }) => {
           const assigner = this.userService.getUser(assignerId);
           return { ...item, assigner };
@@ -75,12 +73,14 @@ export class JobService {
     this.refresh();
   }
 
-  setUser(jobId: number, userId: number) {
+  setUser(jobId: number, userId: number | null) {
     let index = this.data.findIndex((o) => o.id === jobId);
     if (index > -1) {
-      this.data[index] = { ...this.data[index], assignerId: userId };
+      this.data[index] = {
+        ...this.data[index],
+        assignerId: userId ?? undefined,
+      };
     }
-    console.log(this.data[index]);
     this.refresh();
   }
 }
