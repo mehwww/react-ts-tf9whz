@@ -1,0 +1,27 @@
+{
+  "name": "react-ts",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@abraham/reflection": "^0.10.0",
+    "@ebay/nice-modal-react": "^1.2.6",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.2",
+    "antd": "^4.22.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "rxjs": "^7.5.6",
+    "tsyringe": "^4.7.0",
+    "use-constant": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
+}
