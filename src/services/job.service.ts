@@ -1,13 +1,15 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { map, BehaviorSubject, Observable } from "rxjs";
+
 import { injectable } from "tsyringe";
 import { Job, JobStatus, User } from "../models";
+import { UserService } from "./user.service";
 
 @injectable()
 export class JobService {
   data: Job[];
   data$: BehaviorSubject<JobService["data"]>;
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.data = [
       {
         id: 1,
@@ -52,6 +54,17 @@ export class JobService {
     this.data$.next(this.data);
   }
 
+  getData$() {
+    return this.data$.pipe(
+      map((data) => {
+        return data.map(({ assignerId, ...item }) => {
+          const assigner = this.userService.getUser(assignerId);
+          return { ...item, assigner };
+        });
+      })
+    );
+  }
+
   setStatus(jobId: number, status: JobStatus) {
     let index = this.data.findIndex((o) => o.id === jobId);
     if (index > -1) {
@@ -60,10 +73,10 @@ export class JobService {
     this.refresh();
   }
 
-  setUser(jobId: number, user: User) {
+  setUser(jobId: number, userId: number) {
     let index = this.data.findIndex((o) => o.id === jobId);
     if (index > -1) {
-      this.data[index] = { ...this.data[index], assigner: user };
+      this.data[index] = { ...this.data[index], assignerId: userId };
     }
     this.refresh();
   }
