@@ -1,9 +1,9 @@
-import { ActionDefinition } from "../action-definition";
-import { injectable } from "tsyringe";
-import { JobService } from "../../services";
+import { ActionDefinition } from '../action-definition';
+import { injectable } from 'tsyringe';
+import { JobService } from '../../services';
 
 export interface JobRestartActionParams {
-  jobId: string;
+  jobId: number;
 }
 
 @injectable()
@@ -13,9 +13,9 @@ export class JobRestartAction extends ActionDefinition<JobRestartActionParams> {
   }
 
   invoke(params: JobRestartActionParams): void | Promise<void> {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   getMenu(): { name: string } {
-    return { name: "重新开始" };
+    return { name: '重新开始' };
   }
 }

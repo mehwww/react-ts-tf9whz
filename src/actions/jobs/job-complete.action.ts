@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 import { JobService } from '../../services';
 
 export interface JobCompleteActionParams {
-  jobId: string;
+  jobId: number;
 }
 
 @injectable()

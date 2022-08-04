@@ -1,8 +1,8 @@
-import * as React from "react";
-import { EllipsisOutlined } from "@ant-design/icons";
-import { Menu, Dropdown } from "antd";
-import classNames from "classnames";
-import { ContextMenuAction } from "../types/context-menu";
+import * as React from 'react';
+import { EllipsisOutlined } from '@ant-design/icons';
+import { Menu, Dropdown } from 'antd';
+import classNames from 'classnames';
+import { ContextMenuAction } from '../types/context-menu';
 
 type IContextMenuProps<T> = {
   children?: React.ReactNode;
@@ -10,6 +10,7 @@ type IContextMenuProps<T> = {
   actor: T;
 };
 
+// prettier-ignore
 export const ContextMenu = <T,>({
   children,
   actions,
@@ -21,6 +22,7 @@ export const ContextMenu = <T,>({
         <Menu
           items={actions
             .map((act) => {
+              console.log(act)
               if (act.isHidden(actor)) {
                 return null;
               }
