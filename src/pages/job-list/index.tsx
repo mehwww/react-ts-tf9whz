@@ -58,21 +58,10 @@ export const JobList = ({ className, style }: IJobListProps) => {
       .getData$()
       .pipe(
         tap((jobs) => {
-          console.log(jobs);
           setJobs(jobs);
         })
       )
-      .subscribe({
-        next: () => {
-          console.log('next');
-        },
-        error: () => {
-          console.log('error');
-        },
-        complete: () => {
-          console.log('complete');
-        },
-      });
+      .subscribe();
     return () => subscription.unsubscribe();
   }, []);
 
@@ -80,6 +69,7 @@ export const JobList = ({ className, style }: IJobListProps) => {
     <div className={classNames(className)} style={style}>
       <Table
         dataSource={jobs}
+        rowKey="id"
         columns={[
           {
             title: 'id',

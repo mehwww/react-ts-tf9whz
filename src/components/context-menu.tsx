@@ -22,6 +22,7 @@ export const ContextMenu = <T,>({
         <Menu
           items={actions
             .map((act) => {
+              console.log(actor.name, act.isHidden(actor))
               if (act.isHidden(actor)) {
                 return null;
               }
