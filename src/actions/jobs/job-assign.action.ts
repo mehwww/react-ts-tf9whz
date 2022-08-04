@@ -18,6 +18,7 @@ export class JobAssignAction extends ActionDefinition<JobAssignActionParams> {
     const userId = await NiceModal.show(PickUserModal);
     this.jobService.setUser(params.jobId, userId);
   }
+  
   getMenu(): { name: string } {
     return { name: '指定' };
   }

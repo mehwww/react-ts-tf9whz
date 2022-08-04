@@ -1,6 +1,7 @@
 import { ActionDefinition } from '../action-definition';
 import { injectable } from 'tsyringe';
 import { JobService } from '../../services';
+import { JobStatus } from '../../models/job.model';
 
 export interface JobCompleteActionParams {
   jobId: number;
@@ -13,7 +14,7 @@ export class JobCompleteAction extends ActionDefinition<JobCompleteActionParams>
   }
 
   invoke(params: JobCompleteActionParams): void | Promise<void> {
-    throw new Error('Method not implemented.');
+    this.jobService.setStatus(params.jobId, JobStatus.Done)
   }
   getMenu(): { name: string } {
     return { name: '完成' };
