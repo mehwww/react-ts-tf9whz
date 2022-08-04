@@ -1,4 +1,4 @@
-import { ContextMenuAction } from "../types/context-menu";
+import { ContextMenuAction } from '../types/context-menu';
 
 export interface BuildConfig<Actor, Params> {
   name?: string;
@@ -28,5 +28,5 @@ export abstract class ActionDefinition<Params> {
 
   abstract invoke(params: Params): void | Promise<void>;
 
-  abstract getMenu(): { name: string; icon: string };
+  abstract getMenu(): { name: string };
 }

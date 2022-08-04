@@ -15,7 +15,7 @@ export class JobAssignAction extends ActionDefinition<JobAssignActionParams> {
   invoke(params: JobAssignActionParams): void | Promise<void> {
     throw new Error('Method not implemented.');
   }
-  getMenu(): { name: string; icon: string } {
-    throw new Error('Method not implemented.');
+  getMenu(): { name: string } {
+    return { name: '指定' };
   }
 }

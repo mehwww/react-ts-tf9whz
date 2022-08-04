@@ -1,11 +1,12 @@
-import * as React from "react";
-import { tap } from "rxjs";
-import classNames from "classnames";
-import { Table } from "antd";
-import useConstant from "use-constant";
-import { container } from "tsyringe";
-import { JobService } from "../../services";
-import { Job } from "../../models";
+import * as React from 'react';
+import { tap } from 'rxjs';
+import classNames from 'classnames';
+import { Table } from 'antd';
+import useConstant from 'use-constant';
+import { container } from 'tsyringe';
+import { JobService } from '../../services';
+import { Job } from '../../models';
+import { ContextMenu } from '../../components/context-menu';
 
 type IJobListProps = {
   className?: string;
@@ -15,7 +16,9 @@ type IJobListProps = {
 export const JobList = ({ className, style }: IJobListProps) => {
   const jobService = useConstant(() => container.resolve(JobService));
   const [jobs, setJobs] = React.useState<Job[]>([]);
-  const contextActions = useConstant(() => {});
+  const contextActions = useConstant(() => {
+      
+  });
 
   React.useEffect(() => {
     const subscription = jobService.data$
@@ -30,23 +33,29 @@ export const JobList = ({ className, style }: IJobListProps) => {
         dataSource={jobs}
         columns={[
           {
-            title: "id",
-            dataIndex: "id",
+            title: 'id',
+            dataIndex: 'id',
           },
           {
-            title: "name",
-            dataIndex: "name",
+            title: 'name',
+            dataIndex: 'name',
           },
           {
-            title: "status",
-            dataIndex: "status",
+            title: 'status',
+            dataIndex: 'status',
           },
           {
-            title: "assigner",
-            dataIndex: "assigner",
-            render: (o) => o.name ?? "-",
+            title: 'assigner',
+            dataIndex: 'assigner',
+            render: (o) => o?.name ?? '-',
           },
-          { title: "操作" },
+          {
+            title: '操作',
+            dataIndex: 'operations',
+            render: (o) => {
+              return <ContextMenu actor={o} actions={[]} />;
+            },
+          },
         ]}
       />
     </div>
