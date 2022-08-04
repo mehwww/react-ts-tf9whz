@@ -1,6 +1,8 @@
 import { ActionDefinition } from '../action-definition';
 import { injectable } from 'tsyringe';
 import { JobService } from '../../services';
+import NiceModal from '@ebay/nice-modal-react';
+import { PickUserModal } from '../../components/dialogs';
 
 export interface JobAssignActionParams {
   jobId: number;
@@ -12,8 +14,9 @@ export class JobAssignAction extends ActionDefinition<JobAssignActionParams> {
     super();
   }
 
-  invoke(params: JobAssignActionParams): void | Promise<void> {
-    throw new Error('Method not implemented.');
+  async invoke(params: JobAssignActionParams): void | Promise<void> {
+    const userId = await NiceModal.show(PickUserModal);
+    this.jobService.setUser(params.jobId, userId);
   }
   getMenu(): { name: string } {
     return { name: '指定' };

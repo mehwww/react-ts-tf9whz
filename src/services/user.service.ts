@@ -1,27 +1,29 @@
-import { BehaviorSubject } from "rxjs";
-import { User } from "../models";
+import { BehaviorSubject } from 'rxjs';
+import { singleton } from 'tsyringe';
+import { User } from '../models';
 
+@singleton()
 export class UserService {
   data: User[];
-  data$: BehaviorSubject<UserService["data"]>;
+  data$: BehaviorSubject<UserService['data']>;
 
   constructor() {
     this.data = [
       {
         id: 1,
-        name: "jian.li",
+        name: 'jian.li',
       },
       {
         id: 2,
-        name: "wutong.vito",
+        name: 'wutong.vito',
       },
       {
         id: 3,
-        name: "zhouzhengwei.xavier",
+        name: 'zhouzhengwei.xavier',
       },
       {
         id: 4,
-        name: "zhangxiaoping",
+        name: 'zhangxiaoping',
       },
     ];
     this.data$ = new BehaviorSubject(this.data);

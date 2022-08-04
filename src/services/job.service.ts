@@ -1,49 +1,49 @@
-import { map, BehaviorSubject, Observable } from "rxjs";
+import { map, BehaviorSubject, Observable } from 'rxjs';
 
-import { injectable } from "tsyringe";
-import { Job, JobStatus, User } from "../models";
-import { UserService } from "./user.service";
+import { singleton } from 'tsyringe';
+import { Job, JobStatus, User } from '../models';
+import { UserService } from './user.service';
 
-@injectable()
+@singleton()
 export class JobService {
   data: Job[];
-  data$: BehaviorSubject<JobService["data"]>;
+  data$: BehaviorSubject<JobService['data']>;
 
   constructor(private userService: UserService) {
     this.data = [
       {
         id: 1,
-        name: "用户管理 - 群组管理",
+        name: '用户管理 - 群组管理',
         status: JobStatus.New,
       },
       {
         id: 2,
-        name: "平台管理 - 任务卡管理",
+        name: '平台管理 - 任务卡管理',
         status: JobStatus.New,
       },
       {
         id: 3,
-        name: "平台管理 - 字段管理",
+        name: '平台管理 - 字段管理',
         status: JobStatus.New,
       },
       {
         id: 4,
-        name: "平台管理 - 产品管理",
+        name: '平台管理 - 产品管理',
         status: JobStatus.New,
       },
       {
         id: 5,
-        name: "平台管理 - 服务卡管理",
+        name: '平台管理 - 服务卡管理',
         status: JobStatus.New,
       },
       {
         id: 6,
-        name: "企业后台 - 员工管理",
+        name: '企业后台 - 员工管理',
         status: JobStatus.New,
       },
       {
         id: 7,
-        name: "企业后台 - 任务查询",
+        name: '企业后台 - 任务查询',
         status: JobStatus.New,
       },
     ];
@@ -51,12 +51,14 @@ export class JobService {
   }
 
   refresh() {
-    this.data$.next(this.data);
+    this.data$.next([...this.data]);
   }
 
   getData$() {
     return this.data$.pipe(
       map((data) => {
+        console.log('!!!');
+
         return data.map(({ assignerId, ...item }) => {
           const assigner = this.userService.getUser(assignerId);
           return { ...item, assigner };
@@ -78,6 +80,7 @@ export class JobService {
     if (index > -1) {
       this.data[index] = { ...this.data[index], assignerId: userId };
     }
+    console.log(this.data[index]);
     this.refresh();
   }
 }

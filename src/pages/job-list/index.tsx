@@ -24,27 +24,27 @@ type IJobListProps = {
 const JobActions = [
   container.resolve(JobAssignAction).build<Job>({
     resolveParams: (job: Job) => ({ jobId: job.id }),
-    isHidden: (job: Job) => !!job?.assignerId,
+    isHidden: (job: Job) => !!job.assignerId,
     onSuccess: () => message.success('指定成功'),
   }),
   container.resolve(JobUnassignAction).build<Job>({
     resolveParams: (job: Job) => ({ jobId: job.id }),
-    isHidden: (job: Job) => !job?.assignerId,
+    isHidden: (job: Job) => !job.assignerId,
     onSuccess: () => message.success('解除指定成功'),
   }),
   container.resolve(JobStartAction).build<Job>({
     resolveParams: (job: Job) => ({ jobId: job.id }),
-    isHidden: (job: Job) => job?.status !== JobStatus.New,
+    isHidden: (job: Job) => job.status !== JobStatus.New,
     onSuccess: () => message.success('开始任务成功'),
   }),
   container.resolve(JobCompleteAction).build<Job>({
     resolveParams: (job: Job) => ({ jobId: job.id }),
-    isHidden: (job: Job) => job?.status !== JobStatus.Processing,
+    isHidden: (job: Job) => job.status !== JobStatus.Processing,
     onSuccess: () => message.success('完成任务成功'),
   }),
   container.resolve(JobRestartAction).build<Job>({
     resolveParams: (job: Job) => ({ jobId: job.id }),
-    isHidden: (job: Job) => job?.status !== JobStatus.Done,
+    isHidden: (job: Job) => job.status !== JobStatus.Done,
     onSuccess: () => message.success('重新开始成功'),
   }),
 ];
@@ -56,8 +56,23 @@ export const JobList = ({ className, style }: IJobListProps) => {
   React.useEffect(() => {
     const subscription = jobService
       .getData$()
-      .pipe(tap((jobs) => setJobs(jobs)))
-      .subscribe();
+      .pipe(
+        tap((jobs) => {
+          console.log(jobs);
+          setJobs(jobs);
+        })
+      )
+      .subscribe({
+        next: () => {
+          console.log('next');
+        },
+        error: () => {
+          console.log('error');
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
     return () => subscription.unsubscribe();
   }, []);
 
@@ -87,8 +102,8 @@ export const JobList = ({ className, style }: IJobListProps) => {
           {
             title: '操作',
             dataIndex: 'operations',
-            render: (o) => {
-              return <ContextMenu actor={o} actions={JobActions} />;
+            render: (_, job) => {
+              return <ContextMenu actor={job} actions={JobActions} />;
             },
           },
         ]}
