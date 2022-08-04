@@ -77,12 +77,6 @@ export const UserList = ({ className, style }: IUserListProps) => {
             dataIndex: "status",
           },
           {
-            title: "assigner",
-            dataIndex: "assigner",
-            render: (o) =>
-              o?.name ? <Link to={`/users/${o.id}`}>{o.name}</Link> : "-",
-          },
-          {
             title: "操作",
             dataIndex: "operations",
             render: (o) => {
