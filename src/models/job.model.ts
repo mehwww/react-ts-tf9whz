@@ -1,12 +1,14 @@
+import { User } from "./user.model";
+
 export interface Job {
   id: number;
   name: string;
   status: JobStatus;
-  assignerId?: number;
+  assigner?: User;
 }
 
 export enum JobStatus {
-  New = 'New',
-  Processing = 'Processing',
-  Done = 'Done',
+  New = "New",
+  Processing = "Processing",
+  Done = "Done",
 }

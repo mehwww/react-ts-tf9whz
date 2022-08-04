@@ -1,8 +1,7 @@
-import { ContextMenuAction } from '../types/context-menu';
+import { ContextMenuAction } from "../types/context-menu";
 
 export interface BuildConfig<Actor, Params> {
   name?: string;
-  icon?: string;
   resolveParams: (actor: Actor) => Params;
   isHidden?: (actor: Actor) => boolean;
   onSuccess?: () => void;
@@ -15,7 +14,6 @@ export abstract class ActionDefinition<Params> {
 
     return {
       name: config.name ?? menu.name,
-      icon: config.icon ?? menu.icon,
       isHidden: (actor) => config.isHidden?.(actor) ?? false,
       action: async (actor) => {
         try {
